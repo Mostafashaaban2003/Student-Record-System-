@@ -2,12 +2,11 @@
 
 void system_init()
 {
-	load_data();
     printf("\n\n"
     "\n\t\t\t        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
     "\n\t\t\t        =                  WELCOME                  ="
     "\n\t\t\t        =                    TO                     ="
-    "\n\t\t\t        =                 GoSchooler                ="
+    "\n\t\t\t        =                 EL-GELBAB'S               ="
     "\n\t\t\t        =               Student Record              ="
     "\n\t\t\t        =                 MANAGEMENT                ="
     "\n\t\t\t        =                   SYSTEM                  ="
@@ -18,15 +17,9 @@ void system_init()
 		   "2. Student\n");
     
     int choice = Choose_Mode(NUMBER_OF_MODES);
-    choice = Choose_Mode(NUMBER_OF_MODES);
 	switch(choice)
     {
 		case 1:
-			printf
-            (
-           "Hello Admin\n\n"
-           "Please enter your password:"
-            );
             if(check_admin_password()) {
 			choose_method:	
                 printf
@@ -93,7 +86,6 @@ void system_init()
             }
 			break;
 	}
-
 }
 
 int Choose_Mode(int n){

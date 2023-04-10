@@ -10,9 +10,6 @@
 	#define NUMBER_OF_MODES 2
     #define NUMBER_OF_ADMIN_PRIVILEGES 6
     #define NUMBER_OF_USER_PRIVILEGES 3
-        #define NUMBER_OF_MODES 2
-        #define NUMBER_OF_ADMIN_PRIVILEGES 6
-        #define NUMBER_OF_USER_PRIVILEGES 3
 #endif
 void system_init();
 int Choose_Mode();

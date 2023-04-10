@@ -2,10 +2,7 @@
 
 void system_init()
 {
-<<<<<<< HEAD
 	load_data();
-=======
->>>>>>> 2c4b5189ebd045a2e4f85e8cf1fe64dad930eb94
     printf("\n\n"
     "\n\t\t\t        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
     "\n\t\t\t        =                  WELCOME                  ="
@@ -17,27 +14,10 @@ void system_init()
     "\n\t\t\t        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
     "\n\n");
     printf("Please Enter Your Choice:-\n"
-<<<<<<< HEAD
            "1. Admin\n"
 		   "2. Student\n");
     
     int choice = Choose_Mode(NUMBER_OF_MODES);
-	switch(choice)
-    {
-		case 1:
-            if(check_admin_password())
-            {
-            choose_method:    
-				printf("\nChoose any of these privileges: \n");
-                printf("1. Add student record\n");
-                printf("2. Remove student record\n");
-                printf("3. View student record\n");
-                printf("4. View all records\n");
-                printf("5. Edit admin password\n");
-                printf("6. Edit student grade\n");
-=======
-           "1- admin, 2- student:\n");
-
     choice = Choose_Mode(NUMBER_OF_MODES);
 	switch(choice)
     {
@@ -48,6 +28,7 @@ void system_init()
            "Please enter your password:"
             );
             if(check_admin_password()) {
+			choose_method:	
                 printf
                 (
                         "Choose any of these privileges: \n"
@@ -58,13 +39,11 @@ void system_init()
                         "5. Edit admin password\n"
                         "6. Edit student grade\n"
                 );
->>>>>>> 2c4b5189ebd045a2e4f85e8cf1fe64dad930eb94
                 choice = Choose_Mode(NUMBER_OF_ADMIN_PRIVILEGES);
                 switch(choice)
                 {
-                    case 1: Add_student_record(); break;
+                    case 1: add_student(); break;
                     case 2: Remove_student_record(); break;
-<<<<<<< HEAD
                     //case 3: View_student_record(); break;
                     //case 4: View_all_records(); break;
                     case 5:
@@ -75,12 +54,6 @@ void system_init()
 							return;
 						}	
                     //case 6: Edit_student_grade; break;
-=======
-                    case 3: View_student_record(); break;
-                    case 4: View_all_records(); break;
-                    case 5: Edit_admin_password; break;
-                    case 6: Edit_student_grade; break;
->>>>>>> 2c4b5189ebd045a2e4f85e8cf1fe64dad930eb94
                 }
 				printf("\n\nDo you Want to Exit Program?\n"
 					   "Enter 'Y' For \"Yes\", 'N' For \"No\": ");
@@ -97,12 +70,7 @@ void system_init()
             }
 			break;
 		case 2:
-<<<<<<< HEAD
 			if (/*check_student()*/1)
-=======
-			printf("Hello Student\n");
-            if (check_student())
->>>>>>> 2c4b5189ebd045a2e4f85e8cf1fe64dad930eb94
             {
                 printf
                 (
@@ -114,15 +82,9 @@ void system_init()
                 choice = Choose_Mode(NUMBER_OF_USER_PRIVILEGES);
                 switch (choice)
                 {
-<<<<<<< HEAD
                     //case 1: View_your_record() break;
                     //case 2: Edit your password() break;
                     //case 3: Edit your name() break;
-=======
-                    case 1: View_your_record() break;
-                    case 2: Edit your password() break;
-                    case 3: Edit your name() break;
->>>>>>> 2c4b5189ebd045a2e4f85e8cf1fe64dad930eb94
                 }
             }
             else
@@ -139,15 +101,7 @@ int Choose_Mode(int n){
     do
     {
         scanf("%d",&choice);
-
-<<<<<<< HEAD
     }while(!(choice >= 1 && choice <= n)&& printf("Invalid choice!\n"
                                                   "please enter number between 1~%d", n));
-    
-=======
-    }while(!(choice >= 1 && choice <= n)&& printf("Invalid choice"
-                                                "please enter number between 1~%d", n));
-
->>>>>>> 2c4b5189ebd045a2e4f85e8cf1fe64dad930eb94
 	return choice;
 }

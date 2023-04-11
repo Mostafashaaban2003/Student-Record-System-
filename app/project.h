@@ -1,9 +1,10 @@
 #ifndef PROJECT_H
 #define PROJECT_H
-	#include <stdio.h>
-	#include <string.h>
-	#include <stdlib.h>
-	#include <ctype.h>
-	#include <stdbool.h>
 	#include "..\.\interface\interface.h"
 #endif
+
+//load data from students.txt to student* students
+void load_data();
+
+//save data from student* students to students.txt.
+void save_data();

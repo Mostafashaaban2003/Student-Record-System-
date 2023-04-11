@@ -5,6 +5,7 @@
 	#include <string.h>
 	#include <ctype.h> 
 #endif
+
 typedef struct student{
 	char* id;
 	char* name;

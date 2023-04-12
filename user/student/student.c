@@ -3,17 +3,19 @@
 int check_student_password(){
 	char *entered_id, *entered_password;
 	
+	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
+
 	int index, tries = MAX_TRIES;
 	do 
 	{
 		printf("Please Your ID: ");
 		entered_id = takestring_v2();
-		
+		if(!strcmp("-1",entered_id)) return -1;
 		printf("Please Your Password: ");
 		entered_password = takestring_v2();
+		if(!strcmp("-1",entered_password)) return -1;
 		index = search_id(entered_id);
 		encrypt(entered_password);
-		//printf("%s\n%s\n",entered_password,students[index].password);
 	}while((index == -1 || strcmp(students[index].password,entered_password))&& printf("INVALID Login!.\nYou Have %d More Tries.\n",--tries) && tries);
 	if(tries){
 		printf("\nLogin Successfully!\n");
@@ -35,7 +37,7 @@ void View_student_record(int index, int is_admin)
 	if(is_admin){
 		//asking if admin wants to view more students
 		printf("\nDo You Want To View More Students?\n"
-				"Enter 'Y' For \"Yes\", 'N' For \"No\": ");		
+			"Enter 'Y' For \"Yes\" ِAnd Anything Else For \"No\": ");
 		fflush(stdin);	   
 		char again;
 		scanf("%c",&again); fflush(stdin);
@@ -72,30 +74,17 @@ int Edit_student_Password() {
 void Edit_your_name() {
 	
 	//if the user wants to get to the previous screen
-	if(check_your_id()){
-		printf("Enter the new name : ");	
-		char* entered_name = takestring_v2();
-		if(!strcmp(entered_name,"-1")) return;
-		students[my_id_index].name = entered_name;
-		printf("Name Edited Successfully \n");
-		ask_to_save();
-		return;
-	}
+	printf("Enter the new name : ");	
+	char* entered_name = takestring_v2();
+	if(!strcmp(entered_name,"-1")) return;
+	students[my_id_index].name = entered_name;
+	printf("Name Edited Successfully \n");
+	ask_to_save();
+	return;
 	printf("Failed To Edit Name!\n");
 }
 
 
-//asks student to enter his id
-int check_your_id(){
-	char* entered_id;
-	int tries = MAX_TRIES;
-	do{
-		printf("Enter Your Id, Or -1 To Return To the Previous Screen: ");	
-		entered_id = takestring_v2();
-		if(!strcmp(entered_id,"-1")) return 0;
-	}while(strcmp(entered_id,students[my_id_index].id) && printf("Invalid ID.\n" "you have %d tries.\n",--tries) && tries);
-	if(tries) return 1;
-	else return 0;
-}
+
 
 

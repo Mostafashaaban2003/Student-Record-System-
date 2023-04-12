@@ -4,6 +4,7 @@ char* admin_password = "1234";
 
 int check_admin_password()
 {
+	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
 
 	char* entered_password;
 	int tries = MAX_TRIES;
@@ -11,6 +12,7 @@ int check_admin_password()
 	{
 		printf("\nEnter Your Password: ");
 		entered_password = takestring_v2();
+		if(!strcmp("-1",entered_password)) return -1;
 	}while(strcmp(admin_password,entered_password) && printf("INVALID PASSWORD.\nYou Have %d More Tries.\n",--tries) && tries);
 	if(tries) return 1;
 	else return 0;
@@ -20,18 +22,26 @@ int check_admin_password()
 void add_student()
 {
 	
+	printf ("\n----------------( If you want To return To Methods Screen At any Time Enter \"-1\" )----------------\n");
+	
 	// check that id is unique
 	char* entered_id;
+	int is_valid;
 	do
 	{
-		printf("\nEnter The Id, Or -1 To Return To the Previous Screen: ");
+		printf("\nEnter The Id: ");
 		entered_id = takestring_v2();
 		if(!strcmp(entered_id,"-1")) return;
-	}while(search_id(entered_id) != -1 && printf("\nId Found.\n"
-												 "Please Make Sure That The Id Is Unique!\n"));
+		is_valid = Is_valid_id(entered_id);
+		if(!is_valid) printf("\nID Is Not Valid. \nPlease Don't Enter Spaces And Make Sure That Length Is Between 1~14\n");
+	
+	}while( !is_valid || (search_id(entered_id) != -1 && printf("\nId Found.\n"
+												 "Please Make Sure That The Id Is Unique!\n")));
 			
 	//get the index of a free location
 	int index = get_first_free_index();
+	
+	//allocating size
 	if(index == number_of_students)
 	{
         if (number_of_students == 0) 
@@ -45,25 +55,48 @@ void add_student()
 		++number_of_students;
 	}
 	
-	//store data
-	students[index].id = entered_id;
-	printf("Enter The Password: ");
-    students[index].password = takestring_v2();
+	//////////////
+	//store data//
+	//////////////
+	students[index].id = entered_id;	
     printf("Enter The Name: ");
     students[index].name = takestring_v2();
+	if(!strcmp(students[index].name,"-1")){
+		students[index].id = NULL;
+		return;
+	}	
+	printf("Enter The Password: ");
+    students[index].password = takestring_v2();
+		if(!strcmp(students[index].password,"-1")){
+		students[index].id = NULL;
+		return;
+	}	
 	
 	//validating gender
-    printf("Enter The Gender: \n"
-			"1. Male\n"
-			"2. Female\n");
-	int gender = Choose_Number(GENDERS);	
-	if(gender == 1) students[index].gender = "male";
+    printf("Enter The Gender \n"
+			"Enter 1 For \"Male\" And Anything Else For \"Female:\"\n");
+	char* gender =  takestring_v2();	
+	if(!strcmp(gender,"1")) students[index].gender = "male";
+	else if(!strcmp(gender,"-1")){
+		students[index].id = NULL;
+		return;
+	}		
 	else students[index].gender = "female";
 	
-    printf("Enter The Age: ");
-    scanf("%d", &students[index].age);
 	
-	Edit_student_grade(index);
+	int age = take_valid_age();
+	if(age == -1){
+		students[index].id = NULL;
+		return;
+	}
+	students[index].age = age;
+		
+	
+	if(!Edit_student_grade(index, ADDING)){
+		students[index].id = NULL;
+		return;
+	}
+	
 		
 	//encrypting password when storing
 	encrypt(students[index].password);
@@ -75,7 +108,7 @@ void add_student()
 	
 	//asking if admin wants to add more students
 	printf("\nDo You Want To Add More Students?\n"
-			"Enter 'Y' For \"Yes\", 'N' For \"No\": ");
+			"Enter 'Y' For \"Yes\" ِAnd Anything Else For \"No\": ");
 	fflush(stdin);	   
 	char again;
 	scanf("%c",&again); fflush(stdin);
@@ -85,9 +118,8 @@ void add_student()
 
 }
 
-void Remove_student_record()
+void Remove_student_record(int index)
 {
-	int index = get_id();
 	
 	//if the user wants to get to the previous screen
 	if(index == -1) return;
@@ -111,17 +143,18 @@ void Remove_student_record()
 	
 	//asking if admin wants to remove more students
 	printf("\nDo You Want To Remove More Students?\n"
-			"Enter 'Y' For \"Yes\", 'N' For \"No\": ");		
+			"Enter 'Y' For \"Yes\" ِAnd Anything Else For \"No\": ");
 	fflush(stdin);	   
 	char again;
 	scanf("%c",&again); fflush(stdin);
 	again = tolower(again);
-	if(again == 'y') return Remove_student_record();
+	if(again == 'y') return Remove_student_record(get_id());
 	else return;
 }
 
 void View_all_records()
 {
+	int printed = 0;
 	for(int i = 0; i < number_of_students; i++)
 	{
 		//skip removed students
@@ -134,17 +167,20 @@ void View_all_records()
 		printf("ID: %s\n", students[i].id);
 		printf("Gender: %s\n", students[i].gender);
 		printf("Age: %d\n", students[i].age);
-		printf("Total Grade: %d\n", students[i].total_grade);	
+		printf("Total Grade: %d\n", students[i].total_grade);
+		printed++;		
 	}
+	if(!printed) printf("\nThere Are No Students To Print!\n");
 }
 	
 void Edit_admin_password()
 {
 	char *entered_password;
 	int tries = MAX_TRIES;
+	printf ("\n----------------( If you want To return To Methods Screen At any Time Enter \"-1\" )----------------\n");
 	do
 	{
-		printf("Enter Old Password, Or -1 To Return To the Previous Screen: ");
+		printf("Enter Old Password: ");
 		entered_password = takestring_v2();
 		if(!strcmp(entered_password,"-1")) return;
 	}while(strcmp(admin_password,entered_password) && printf("INVALID PASSWORD.\n"
@@ -153,6 +189,7 @@ void Edit_admin_password()
 	{
 		printf("Enter New Password: ");
 		entered_password = takestring_v2();
+		if(!strcmp(entered_password,"-1")) return;
 		free(admin_password);
 		admin_password = entered_password;
 		printf("\nPassword Changed Successfully!\n");
@@ -162,21 +199,40 @@ void Edit_admin_password()
 	return;
 }
 
-void Edit_student_grade(int index)
+int Edit_student_grade(int index, int is_adding)
 {
 	
 	//if the user wants to get to the previous screen
-	if(index == -1) return;
+	char* temp_string = NULL;
+	if(index == -1) return 0;
+	int temp_grade = students[index].total_grade;
 	do 
 	{	
 		printf("Please Enter the new student's grade from 0~100: ");
-		char* temp = takestring_v2();
-		students[index].total_grade = atoi(temp);
-		free(temp);
-		temp = NULL;
-		if(students[index].total_grade == -1) return ;
-	}while(!(students[index].total_grade >= 0 && students[index].total_grade <= MAXIMUM_GRADE ) && printf("INVALID Grade!\n" ));
+		temp_string = takestring_v2();
+		students[index].total_grade = atoi(temp_string);
+		if(!strcmp(temp_string,"-1")){
+			students[index].total_grade = temp_grade;
+			return 0;
+		}	
+	}while(((students[index].total_grade == 0 && *temp_string != '0' ) || !(students[index].total_grade >= 0 && students[index].total_grade <= MAXIMUM_GRADE ) )&& printf("INVALID Grade!\n" ));
+	free(temp_string);
+	temp_string = NULL;
 	printf("\nGrade Added Successfully!\n");
+	
+	// if the admin isn't adding students and just editing thuer grades
+	if(!is_adding){
+		//asking if admin wants to Change more students Degrees
+		printf("\nDo You Want To Change More Students Grades?\n"
+			"Enter 'Y' For \" Yes \" And Anything Else For \"No\": ");
+		fflush(stdin);	   
+		char again;
+		scanf("%c",&again); fflush(stdin);
+		again = tolower(again);
+		if(again == 'y') return Edit_student_grade(get_id(),ADMIN);
+		else return 1;
+	}
+	return 1;
 	
 }
 	

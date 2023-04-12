@@ -72,7 +72,7 @@ char* takestring_v2(){
 	fflush(stdin);
 	if(len == 1)  return takestring_v2();
 	if(*s == ' ') {
-		printf("");
+		printf("Cannot Start With Spaces!\nEnter Again: ");
 		return takestring_v2();
 	}
 
@@ -100,7 +100,8 @@ int get_id()
 {
 	char *entered_id;
 	int index;
-	printf("Please Enter Student's ID, Or -1 To Return To the Previous Screen: ");
+	printf ("\n----------------( If you want To return To Methods Screen At any Time Enter \"-1\" )----------------\n");
+	printf("Please Enter Student's ID: ");
 	do 
 	{
 		entered_id = takestring_v2();
@@ -162,7 +163,7 @@ void decrypt(char* encrypted){
 
 void ask_to_save(){
 	printf("\nDo You Want To Save Data To File?\n"
-			"Enter 'Y' For \"Yes\", 'N' For \"No\": ");
+			"Enter 'Y' For \"Yes\" And Anything Else For \"No\": ");
 	fflush(stdin);	   
 	char again;
 	scanf("%c",&again); fflush(stdin);
@@ -193,3 +194,25 @@ void save_data()
     fclose(fp); // Close file
     printf("Data saved to file successfully!\n");
 }	
+
+
+int Is_valid_id(char * id){
+	if(strlen(id) > 14) return 0;
+	for(int i = 0; i < strlen(id); i++){
+		if(id[i] == ' ')return 0;
+	}
+	return 1;
+}
+
+int take_valid_age(){
+	char * string_age;
+	int age;
+	do{
+		printf("Enter The Age: ");
+		string_age = takestring_v2();
+		age = atoi(string_age);
+		if(!strcmp(string_age,"-1")) return -1;
+	}while(!(age >= 7 && age <= 20) && printf("\nInvalid ID! \nPlease Enter Age Between 7~20\n"));
+	 
+	return age;
+}

@@ -57,3 +57,7 @@ void ask_to_save();
 	
 //save data from student* students to students.txt.
 void save_data();
+
+int Is_valid_id(char * id);
+
+int take_valid_age();

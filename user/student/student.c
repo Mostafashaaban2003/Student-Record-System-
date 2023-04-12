@@ -25,8 +25,9 @@ int check_student_password(){
 
 void View_student_record(int index, int is_admin)
 {
+	
 	if(index == -1) return;
-	printf("Name: %s\n", students[index].name);
+	printf("\nName: %s\n", students[index].name);
     printf("ID: %s\n", students[index].id);
 	printf("Gender: %s\n", students[index].gender);
     printf("Age: %d\n", students[index].age);
@@ -48,13 +49,18 @@ void View_student_record(int index, int is_admin)
 int Edit_student_Password() {
     char *entered_password;
     int tries = MAX_TRIES;
+	printf ("\n---------------- If you want To return To Methods Screen At any Time Enter \"-1\" ----------------:\n");
     do {
         printf ("Enter old password: ");
         entered_password = takestring_v2();
-    }while(strcmp(students[my_id_index].password,entered_password)&&  printf("Invalid password.\n " "you have %d tries.\n",--tries)&&tries);
+		if(!strcmp(entered_password,"-1")) return 0;
+		encrypt(entered_password);
+    }while(strcmp(students[my_id_index].password,entered_password)&&  printf("Invalid password.\n" "you have %d tries.\n",--tries)&&tries);
     if (tries){
         printf ("Enter New password: ");
         entered_password = takestring_v2();
+		if(!strcmp(entered_password,"-1")) return 0;
+		encrypt(entered_password);
         students[my_id_index].password = entered_password;
 		printf("Password Edited Successfully \n");
 		ask_to_save();
@@ -64,17 +70,12 @@ int Edit_student_Password() {
 }	
 
 void Edit_your_name() {
-	char* entered_id;
-	int tries = MAX_TRIES;
-	do{
-		printf("Enter Your Id: ");	
-		entered_id = takestring_v2();
-	}while(strcmp(entered_id,students[my_id_index].id) && printf("Invalid ID.\n" "you have %d tries.\n",--tries) && tries);	
 	
 	//if the user wants to get to the previous screen
-	if(tries){
+	if(check_your_id()){
 		printf("Enter the new name : ");	
 		char* entered_name = takestring_v2();
+		if(!strcmp(entered_name,"-1")) return;
 		students[my_id_index].name = entered_name;
 		printf("Name Edited Successfully \n");
 		ask_to_save();
@@ -83,5 +84,18 @@ void Edit_your_name() {
 	printf("Failed To Edit Name!\n");
 }
 
+
+//asks student to enter his id
+int check_your_id(){
+	char* entered_id;
+	int tries = MAX_TRIES;
+	do{
+		printf("Enter Your Id, Or -1 To Return To the Previous Screen: ");	
+		entered_id = takestring_v2();
+		if(!strcmp(entered_id,"-1")) return 0;
+	}while(strcmp(entered_id,students[my_id_index].id) && printf("Invalid ID.\n" "you have %d tries.\n",--tries) && tries);
+	if(tries) return 1;
+	else return 0;
+}
 
 

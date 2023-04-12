@@ -161,7 +161,7 @@ void decrypt(char* encrypted){
         
 
 void ask_to_save(){
-	printf("\nDo You Want To Save Data?\n"
+	printf("\nDo You Want To Save Data To File?\n"
 			"Enter 'Y' For \"Yes\", 'N' For \"No\": ");
 	fflush(stdin);	   
 	char again;

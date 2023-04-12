@@ -17,3 +17,6 @@ int Edit_student_Password();
 
 //asks student for id and edits its name
 void Edit_your_name();
+
+//asks student to enter his id
+int check_your_id();

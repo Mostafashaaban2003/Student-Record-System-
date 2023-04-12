@@ -71,7 +71,7 @@ void system_init()
 						choice = Choose_Number(NUMBER_OF_USER_PRIVILEGES);
 						switch (choice)
 						{
-							case 1: View_student_record(my_id_index,STUDENT); break;
+							case 1: if(check_your_id()) View_student_record(my_id_index,STUDENT); break;
 							case 2: Edit_student_Password(); break;
 							case 3: Edit_your_name(); break;
 							case 4: tologin = 1; break;

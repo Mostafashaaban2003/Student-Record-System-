@@ -15,7 +15,7 @@ void system_init()
     "\n\n");
 	
 	while(1){
-		int tologin = 1;
+		int tologin = 0;
 		
 		printf("\nPlease Enter Your Choice:-\n"
 			   "1. Admin\n"
@@ -44,19 +44,19 @@ void system_init()
 						{
 							case 1: add_student(); break;
 							case 2: Remove_student_record(); break;
-							case 3: View_student_record(check_id()); break;
+							case 3: View_student_record(get_id(), ADMIN); break;
 							case 4: View_all_records(); break;
 							case 5: Edit_admin_password(); break;
-							case 6: Edit_student_grade(check_id()); break;
-							case 7: tologin = 0; break;
+							case 6: Edit_student_grade(get_id()); break;
+							case 7: tologin = 1; break;
 							case 8: return;
 						}
-						if(!tologin) break;
+						if(tologin) break;
 					}
 				}	
 				else exit(1); break;
 			case 2:
-				if (check_student())
+				if (check_student_password())
 				{
 					while(1){
 						printf
@@ -71,13 +71,13 @@ void system_init()
 						choice = Choose_Number(NUMBER_OF_USER_PRIVILEGES);
 						switch (choice)
 						{
-							case 1: View_student_record(my_id_index); break;
+							case 1: View_student_record(my_id_index,STUDENT); break;
 							case 2: Edit_student_Password(); break;
 							case 3: Edit_your_name(); break;
-							case 4: tologin = 0; break;
+							case 4: tologin = 1; break;
 							case 5: return;
 						}
-						if(!tologin) break;
+						if(tologin) break;
 					}	
 				}
 				else exit(1); break;

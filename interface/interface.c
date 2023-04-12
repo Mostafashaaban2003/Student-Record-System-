@@ -56,22 +56,29 @@ void system_init()
 				}	
 				else exit(1); break;
 			case 2:
-				if (/*check_student()*/1)
+				if (check_student())
 				{
-					printf
-					(
-					"\nChoose any of these privileges: \n"
-					"1. View your record.\n"
-					"2. Edit your password.\n"
-					"3. Edit your name\n"
-					);
-					choice = Choose_Number(NUMBER_OF_USER_PRIVILEGES);
-					switch (choice)
-					{
-						//case 1: View_student_record(); break;
-						//case 2: Edit your password() break;
-						//case 3: Edit your name() break;
-					}
+					while(1){
+						printf
+						(
+						"\nChoose any of these privileges: \n"
+						"1. View your record.\n"
+						"2. Edit your password.\n"
+						"3. Edit your name\n"
+						"4. logout\n"
+						"5. Exit\n"
+						);
+						choice = Choose_Number(NUMBER_OF_USER_PRIVILEGES);
+						switch (choice)
+						{
+							case 1: View_student_record(my_id_index); break;
+							case 2: Edit_student_Password(); break;
+							case 3: Edit_your_name(); break;
+							case 4: tologin = 0; break;
+							case 5: return;
+						}
+						if(!tologin) break;
+					}	
 				}
 				else exit(1); break;
 		}			

@@ -1,7 +1,7 @@
 A11
 ali
 male
-УgB@
+°‡иЎРУg
 15
 150
 A12
@@ -25,6 +25,24 @@ female
 A110
 kamel
 male
-УgB@	tЙ
+УgB@
+19
+100
+A16
+fathy
+male
+°‡иЎРУg
+20
+100
+1234
+mohamed
+male
+УgB@
+19
+70
+123456
+osama
+male
+№
 19
 100

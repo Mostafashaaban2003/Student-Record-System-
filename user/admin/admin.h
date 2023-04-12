@@ -1,15 +1,13 @@
 #ifndef ADMIN_H
 #define ADMIN_H
 	#include "..\.\student\student.h"
-	#define MAX_TRIES 3
 	#define MAXIMUM_GRADE 100
 	#define GENDERS 2
 #endif
 
 //13 functions
 
-//load data from students.txt to student* students
-void load_data();
+
 
 //checks admin password 3 times, returns 0 if the user ran out of tries
 int check_admin_password();
@@ -32,18 +30,9 @@ void Edit_admin_password();
 //change student grade (must be 0 ~ 150) 
 void Edit_student_grade(int index);
 
-//encrypt student password
-void encrypt(char* origin);
-
-//decrypt student password
-void decrypt(char* encrypted);
-
 //choose number from 1 to n
 int Choose_Number(int n);
 
-//asking if admin wants to save data
-void ask_to_save();
-	
-//save data from student* students to students.txt.
-void save_data();
 
+//load data from students.txt to student* students
+void load_data();

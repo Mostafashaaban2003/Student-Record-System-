@@ -12,7 +12,7 @@ int check_student_password(){
 		printf("Please Your Password: ");
 		entered_password = takestring_v2();
 		index = search_id(entered_id);
-		//encrypt(entered_password);
+		encrypt(entered_password);
 		//printf("%s\n%s\n",entered_password,students[index].password);
 	}while((index == -1 || strcmp(students[index].password,entered_password))&& printf("INVALID Login!.\nYou Have %d More Tries.\n",--tries) && tries);
 	if(tries){
@@ -49,11 +49,11 @@ int Edit_student_Password() {
     char *entered_password;
     int tries = MAX_TRIES;
     do {
-        printf ("Enter old password :");
+        printf ("Enter old password: ");
         entered_password = takestring_v2();
     }while(strcmp(students[my_id_index].password,entered_password)&&  printf("Invalid password.\n " "you have %d tries.\n",--tries)&&tries);
     if (tries){
-        printf ("Enter New password:");
+        printf ("Enter New password: ");
         entered_password = takestring_v2();
         students[my_id_index].password = entered_password;
 		printf("Password Edited Successfully \n");
@@ -72,7 +72,6 @@ void Edit_your_name() {
 	}while(strcmp(entered_id,students[my_id_index].id) && printf("Invalid ID.\n" "you have %d tries.\n",--tries) && tries);	
 	
 	//if the user wants to get to the previous screen
-	//if(index == -1) return;
 	if(tries){
 		printf("Enter the new name : ");	
 		char* entered_name = takestring_v2();

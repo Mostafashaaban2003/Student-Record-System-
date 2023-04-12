@@ -66,7 +66,7 @@ void add_student()
 	Edit_student_grade(index);
 		
 	//encrypting password when storing
-	//encrypt(students[index].password);
+	encrypt(students[index].password);
 	
 	printf("\nStudent Added Successfully!\n");
 			

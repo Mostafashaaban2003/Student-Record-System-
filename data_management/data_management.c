@@ -91,7 +91,7 @@ int Choose_Number(int n){
 		//freeing pointer
 		free(temp);
 		temp = NULL;
-    }while(!(choice >= 1 && choice <= n)&& printf("Invalid choice!\n"
+    }while(!(choice >= 1 && choice <= n)&& printf("\nInvalid choice!\n"
                                                   "please enter number between 1~%d: ", n));
 	return choice;
 }	
@@ -199,7 +199,7 @@ void save_data()
 int Is_valid_id(char * id){
 	if(strlen(id) > 14) return 0;
 	for(int i = 0; i < strlen(id); i++){
-		if(id[i] == ' ')return 0;
+		if(isspace(id[i]))return 0;
 	}
 	return 1;
 }
@@ -207,12 +207,14 @@ int Is_valid_id(char * id){
 int take_valid_age(){
 	char * string_age;
 	int age;
+	printf("Warning: If you enter a space after the number you entered, the program will ignore what is entered after this number!\n");
 	do{
 		printf("Enter The Age: ");
 		string_age = takestring_v2();
+		printf("\n");
 		age = atoi(string_age);
 		if(!strcmp(string_age,"-1")) return -1;
-	}while(!(age >= 7 && age <= 20) && printf("\nInvalid ID! \nPlease Enter Age Between 7~20\n"));
+	}while(!(age >= 7 && age <= 20) && printf("Invalid Age! \nPlease Enter Age Between 7~20\n"));
 	 
 	return age;
 }

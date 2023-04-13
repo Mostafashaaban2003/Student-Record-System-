@@ -31,8 +31,12 @@ void load_data()
 		students[i].id = (char*) malloc(strlen(buffer) + 1);
         sscanf(buffer, "%s", students[i].id);
         fgets(buffer, 1000, fp);
-		students[i].name = (char*) malloc(strlen(buffer) + 1);		
-        sscanf(buffer, "%s", students[i].name);
+		students[i].name = (char*) malloc(strlen(buffer) + 1);	
+		for (int j = 0; buffer[j] != '\n'; j++) {
+			students[i].name[j] = buffer[j];
+		}	
+		students[i].name[strlen(buffer)] = '\0';
+		
         fgets(buffer, 1000, fp);
 		students[i].gender = (char*) malloc(strlen(buffer) + 1);		
         sscanf(buffer, "%s", students[i].gender);
@@ -227,7 +231,7 @@ char* take_valid_name(){
 		if(!strcmp(entered_name,"-1")) return NULL;
 		for(int i = 0; i < strlen(entered_name); i++)
 		{
-			if(!isalpha(entered_name[i]))
+			if(!isalpha(entered_name[i]) && !isspace(entered_name[i]))
 			{
 				valid = 0;
 				break;

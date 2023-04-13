@@ -85,6 +85,5 @@ void system_init()
 				else exit(1); break;
 		}			
 	}
-	save_data();
 }
 

@@ -126,7 +126,7 @@ void add_student()
 void Remove_student_record(int index)
 {
 	if(number_of_students == 0){
-		printf("\There Is No Students To Remove!\n"); 
+		printf("\nThere Is No Students To Remove!\n"); 
 		return;
 	}	
 	

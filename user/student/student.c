@@ -87,7 +87,14 @@ void Edit_your_name() {
 	return;
 }
 
-
+// void forgot_my_password(){
+	// printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
+	// printf("Please Your ID: ");
+	// entered_id = takestring_v2();
+	// if(!strcmp("-1",entered_id)) return -1;
+	
+	
+// }	
 
 
 

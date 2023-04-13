@@ -60,12 +60,26 @@ void add_student()
 	//////////////
 	students[index].id = entered_id;	
     printf("Enter The Name: ");
-    students[index].name = takestring_v2();
+	students[index].name = takestring_v2();
 	if(!strcmp(students[index].name,"-1")){
 		students[index].id = NULL;
 		return;
+	}
+	for(int i = 0; i < strlen(students[index].name); i++)
+	{
+		if(!islower(students[index].name[i]) && !isupper(students[index].name[i]) && !isspace(students[index].name[i]))
+		{
+			printf("\nName should be characters only\n");
+			printf("Enter again: ");
+			students[index].name = takestring_v2();
+			if(!strcmp(students[index].name,"-1")){
+		students[index].id = NULL;
+		return;
+	}
+			i = -1;
+		}
 	}	
-	printf("Enter The Password: ");
+	printf("\nEnter The Password: ");
     students[index].password = takestring_v2();
 		if(!strcmp(students[index].password,"-1")){
 		students[index].id = NULL;
@@ -74,8 +88,9 @@ void add_student()
 	
 	//validating gender
     printf("Enter The Gender \n"
-			"Enter 1 For \"Male\" And Anything Else For \"Female:\"\n");
-	char* gender =  takestring_v2();	
+			"Enter 1 For \"Male\" And Anything Else For \"Female\": ");
+	char* gender =  takestring_v2();
+    printf("\n");	
 	if(!strcmp(gender,"1")) students[index].gender = "male";
 	else if(!strcmp(gender,"-1")){
 		students[index].id = NULL;
@@ -206,10 +221,12 @@ int Edit_student_grade(int index, int is_adding)
 	char* temp_string = NULL;
 	if(index == -1) return 0;
 	int temp_grade = students[index].total_grade;
+	printf("Warning: If you enter a space after the number you entered, the program will ignore what is entered after this number!\n");
 	do 
 	{	
-		printf("Please Enter the new student's grade from 0~100: ");
+	    printf("Please Enter the new student's grade from 0~100: ");
 		temp_string = takestring_v2();
+		printf("\n");
 		students[index].total_grade = atoi(temp_string);
 		if(!strcmp(temp_string,"-1")){
 			students[index].total_grade = temp_grade;

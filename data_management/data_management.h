@@ -61,3 +61,7 @@ void save_data();
 int Is_valid_id(char * id);
 
 int take_valid_age();
+
+char* take_valid_name();
+
+int string_to_int(char* string_num);

@@ -86,7 +86,7 @@ int Choose_Number(int n){
 		char* temp = takestring_v2();
 		
 		//converting string to intger
-		choice = atoi(temp);
+		choice = string_to_int(temp);
 		
 		//freeing pointer
 		free(temp);
@@ -171,7 +171,6 @@ void ask_to_save(){
 	if(again == 'y') save_data();
 	return;
 }
-
 // copy data from student to file.
 void save_data()
 {
@@ -199,22 +198,54 @@ void save_data()
 int Is_valid_id(char * id){
 	if(strlen(id) > 14) return 0;
 	for(int i = 0; i < strlen(id); i++){
-		if(isspace(id[i]))return 0;
+		if(!isdigit(id[i]))return 0;
 	}
 	return 1;
 }
 
 int take_valid_age(){
-	char * string_age;
-	int age;
-	printf("Warning: If you enter a space after the number you entered, the program will ignore what is entered after this number!\n");
+	char * string_age = NULL;
+	int age, valid;
 	do{
-		printf("Enter The Age: ");
+		printf("\nEnter The Age: ");
 		string_age = takestring_v2();
-		printf("\n");
-		age = atoi(string_age);
-		if(!strcmp(string_age,"-1")) return -1;
-	}while(!(age >= 7 && age <= 20) && printf("Invalid Age! \nPlease Enter Age Between 7~20\n"));
+		if(!strcmp(string_age,"-1")) return -1;	
+		age = string_to_int(string_age);
+	}while(!(age >= 7 && age <= 20) && printf("\nInvalid Age! \nPlease Enter Age Between 7~20\n"));
 	 
 	return age;
 }
+
+char* take_valid_name(){
+	int valid;
+	char * entered_name;
+	printf("\n");
+	do{
+		valid = 1;
+		printf("Enter The Name: ");
+		entered_name = takestring_v2();
+		if(!strcmp(entered_name,"-1")) return NULL;
+		for(int i = 0; i < strlen(entered_name); i++)
+		{
+			if(!isalpha(entered_name[i]))
+			{
+				valid = 0;
+				break;
+			}
+		}	
+	}while(!valid && printf("\nName should be characters only\n"));
+	return entered_name;
+}	
+
+int string_to_int(char* string_num){
+	if(strlen(string_num) > 10) return -1;
+	int num = 0;
+	for(int i = 0; i < strlen(string_num); i++)
+	{
+		if(!isdigit(string_num[i])) return -1;
+		num *= 10;
+		num += string_num[i] - '0';
+	}	
+	return num;
+}
+

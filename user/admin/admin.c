@@ -33,7 +33,7 @@ void add_student()
 		entered_id = takestring_v2();
 		if(!strcmp(entered_id,"-1")) return;
 		is_valid = Is_valid_id(entered_id);
-		if(!is_valid) printf("\nID Is Not Valid. \nPlease Don't Enter Spaces And Make Sure That Length Is Between 1~14\n");
+		if(!is_valid) printf("\nID Is Not Valid. \nPlease Make Sure That Id Consists of Numbers Only and its Length Is Between 1~14\n");
 	
 	}while( !is_valid || (search_id(entered_id) != -1 && printf("\nId Found.\n"
 												 "Please Make Sure That The Id Is Unique!\n")));
@@ -59,26 +59,14 @@ void add_student()
 	//store data//
 	//////////////
 	students[index].id = entered_id;	
-    printf("Enter The Name: ");
-	students[index].name = takestring_v2();
-	if(!strcmp(students[index].name,"-1")){
+
+
+	students[index].name = take_valid_name();
+	if(students[index].name == NULL){
 		students[index].id = NULL;
 		return;
 	}
-	for(int i = 0; i < strlen(students[index].name); i++)
-	{
-		if(!islower(students[index].name[i]) && !isupper(students[index].name[i]) && !isspace(students[index].name[i]))
-		{
-			printf("\nName should be characters only\n");
-			printf("Enter again: ");
-			students[index].name = takestring_v2();
-			if(!strcmp(students[index].name,"-1")){
-		students[index].id = NULL;
-		return;
-	}
-			i = -1;
-		}
-	}	
+
 	printf("\nEnter The Password: ");
     students[index].password = takestring_v2();
 		if(!strcmp(students[index].password,"-1")){
@@ -87,10 +75,9 @@ void add_student()
 	}	
 	
 	//validating gender
-    printf("Enter The Gender \n"
+    printf("\nEnter The Gender \n"
 			"Enter 1 For \"Male\" And Anything Else For \"Female\": ");
 	char* gender =  takestring_v2();
-    printf("\n");	
 	if(!strcmp(gender,"1")) students[index].gender = "male";
 	else if(!strcmp(gender,"-1")){
 		students[index].id = NULL;
@@ -107,6 +94,7 @@ void add_student()
 	students[index].age = age;
 		
 	
+	//Editing Student Grade
 	if(!Edit_student_grade(index, ADDING)){
 		students[index].id = NULL;
 		return;
@@ -118,23 +106,29 @@ void add_student()
 	
 	printf("\nStudent Added Successfully!\n");
 			
-	//asking admin if he wants to save data
-	ask_to_save();
+
 	
 	//asking if admin wants to add more students
 	printf("\nDo You Want To Add More Students?\n"
-			"Enter 'Y' For \"Yes\" ِAnd Anything Else For \"No\": ");
+			"Enter 'Y' For \"Yes\" And Anything Else For \"No\": ");
 	fflush(stdin);	   
 	char again;
 	scanf("%c",&again); fflush(stdin);
 	again = tolower(again);
 	if(again == 'y') return add_student();
-	else return;					
-
+	
+	//asking admin if he wants to save data
+	ask_to_save();
+	
+	return;
 }
 
 void Remove_student_record(int index)
 {
+	if(number_of_students == 0){
+		printf("\There Is No Students To Remove!\n"); 
+		return;
+	}	
 	
 	//if the user wants to get to the previous screen
 	if(index == -1) return;
@@ -217,17 +211,15 @@ void Edit_admin_password()
 int Edit_student_grade(int index, int is_adding)
 {
 	
-	//if the user wants to get to the previous screen
 	char* temp_string = NULL;
+	//if the user wants to get to the previous screen
 	if(index == -1) return 0;
 	int temp_grade = students[index].total_grade;
-	printf("Warning: If you enter a space after the number you entered, the program will ignore what is entered after this number!\n");
 	do 
 	{	
 	    printf("Please Enter the new student's grade from 0~100: ");
 		temp_string = takestring_v2();
-		printf("\n");
-		students[index].total_grade = atoi(temp_string);
+		students[index].total_grade = string_to_int(temp_string);
 		if(!strcmp(temp_string,"-1")){
 			students[index].total_grade = temp_grade;
 			return 0;
@@ -235,9 +227,10 @@ int Edit_student_grade(int index, int is_adding)
 	}while(((students[index].total_grade == 0 && *temp_string != '0' ) || !(students[index].total_grade >= 0 && students[index].total_grade <= MAXIMUM_GRADE ) )&& printf("INVALID Grade!\n" ));
 	free(temp_string);
 	temp_string = NULL;
+	
 	printf("\nGrade Added Successfully!\n");
 	
-	// if the admin isn't adding students and just editing thuer grades
+	// if the admin isn't adding students and just editing thier grades
 	if(!is_adding){
 		//asking if admin wants to Change more students Degrees
 		printf("\nDo You Want To Change More Students Grades?\n"

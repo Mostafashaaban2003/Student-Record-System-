@@ -51,7 +51,7 @@ void View_student_record(int index, int is_admin)
 int Edit_student_Password() {
     char *entered_password;
     int tries = MAX_TRIES;
-	printf ("\n---------------- If you want To return To Methods Screen At any Time Enter \"-1\" ----------------:\n");
+	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
     do {
         printf ("Enter old password: ");
         entered_password = takestring_v2();
@@ -72,27 +72,19 @@ int Edit_student_Password() {
 }	
 
 void Edit_your_name() {
+	char * entered_name;
+	
+	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
+
+	printf("\nPlease Make Sure That Your New Name Only Consists Of Characters.\n");	
+	entered_name = take_valid_name();
 	
 	//if the user wants to get to the previous screen
-	printf("Enter the new name : ");	
-	char* entered_name = takestring_v2();
-	if(!strcmp(entered_name,"-1")) return;
-	for(int i = 0; i < strlen(entered_name); i++)
-	{
-		if(!islower(entered_name[i]) && !isupper(entered_name[i]) && !isspace(entered_name[i]))
-		{
-			printf("\nName should be characters only\n");
-			printf("Enter again: ");
-			entered_name = takestring_v2();
-			if(!strcmp(entered_name,"-1")) return;
-			i = -1;
-		}
-	}
+	if(entered_name == NULL) return;
 	students[my_id_index].name = entered_name;
 	printf("Name Edited Successfully \n");
 	ask_to_save();
 	return;
-	printf("Failed To Edit Name!\n");
 }
 
 

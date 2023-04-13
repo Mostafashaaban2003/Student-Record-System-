@@ -4,14 +4,16 @@ char* admin_password = "1234";
 
 int check_admin_password()
 {
+	printf ("\n======================================> ADMIN LOGIN SCREEN <====================================== \n");	
 	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
 
-	char* entered_password;
+	char* entered_password = NULL;
 	int tries = MAX_TRIES;
-	do
+	do		
 	{
 		printf("\nEnter Your Password: ");
 		entered_password = takestring_v2();
+		//if User entered - 1 return to login screen
 		if(!strcmp("-1",entered_password)) return -1;
 	}while(strcmp(admin_password,entered_password) && printf("INVALID PASSWORD.\nYou Have %d More Tries.\n",--tries) && tries);
 	if(tries) return 1;
@@ -21,11 +23,10 @@ int check_admin_password()
 
 void add_student()
 {
-	
 	printf ("\n----------------( If you want To return To Methods Screen At any Time Enter \"-1\" )----------------\n");
 	
 	// check that id is unique
-	char* entered_id;
+	char* entered_id = NULL;
 	int is_valid;
 	do
 	{
@@ -125,6 +126,7 @@ void add_student()
 
 void Remove_student_record(int index)
 {
+	
 	if(number_of_students == 0){
 		printf("\nThere Is No Students To Remove!\n"); 
 		return;
@@ -147,9 +149,6 @@ void Remove_student_record(int index)
 	
 	printf("\nStudent Removed Successfully!\n");
 	
-	//asking admin if he wants to save data
-	ask_to_save();
-	
 	//asking if admin wants to remove more students
 	printf("\nDo You Want To Remove More Students?\n"
 			"Enter 'Y' For \"Yes\" ِAnd Anything Else For \"No\": ");
@@ -158,7 +157,10 @@ void Remove_student_record(int index)
 	scanf("%c",&again); fflush(stdin);
 	again = tolower(again);
 	if(again == 'y') return Remove_student_record(get_id());
-	else return;
+	
+	//asking admin if he wants to save data
+	ask_to_save();
+	return;
 }
 
 void View_all_records()
@@ -184,7 +186,7 @@ void View_all_records()
 	
 void Edit_admin_password()
 {
-	char *entered_password;
+	char *entered_password = NULL;
 	int tries = MAX_TRIES;
 	printf ("\n----------------( If you want To return To Methods Screen At any Time Enter \"-1\" )----------------\n");
 	do
@@ -214,6 +216,7 @@ int Edit_student_grade(int index, int is_adding)
 	char* temp_string = NULL;
 	//if the user wants to get to the previous screen
 	if(index == -1) return 0;
+	
 	int temp_grade = students[index].total_grade;
 	do 
 	{	
@@ -225,6 +228,8 @@ int Edit_student_grade(int index, int is_adding)
 			return 0;
 		}	
 	}while(((students[index].total_grade == 0 && *temp_string != '0' ) || !(students[index].total_grade >= 0 && students[index].total_grade <= MAXIMUM_GRADE ) )&& printf("INVALID Grade!\n" ));
+	
+	//freeing temp_string pointer
 	free(temp_string);
 	temp_string = NULL;
 	

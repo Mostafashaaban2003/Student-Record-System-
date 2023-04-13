@@ -2,7 +2,6 @@
 
 void system_init()
 {
-	load_data();
     printf("\n\n"
     "\n\t\t\t        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
     "\n\t\t\t        =                  WELCOME                  ="
@@ -15,7 +14,7 @@ void system_init()
     "\n\n");
 	
 	while(1){
-		int tologin = 0, login;
+		int logout = 0, login;
 		
 		printf("\nPlease Enter Your Choice:-\n"
 			   "1. Admin\n"
@@ -24,9 +23,11 @@ void system_init()
 		int choice = Choose_Number(NUMBER_OF_MODES);
 		switch(choice)
 		{
+			// admin mode
 			case 1:
 				if(login = check_admin_password()) {
 					while(1){	
+						//if User entered - 1 return to login screen
 						if(login == -1) break;
 						printf
 						(
@@ -49,12 +50,14 @@ void system_init()
 							case 4: View_all_records(); break;
 							case 5: Edit_admin_password(); break;
 							case 6: Edit_student_grade(get_id(), EDITING); break;
-							case 7: tologin = 1; break;
+							case 7: logout = 1; break;
 							case 8: return;
 						}
-						if(tologin) break;
+						//if the user choose logout
+						if(logout) break;
 					}
 				}	
+				//if user failed to login as admin the program terminates
 				else exit(1); break;
 			case 2:
 				if (login = check_student_password())
@@ -76,10 +79,10 @@ void system_init()
 							case 1: View_student_record(my_id_index,STUDENT); break;
 							case 2: Edit_student_Password(); break;
 							case 3: Edit_your_name(); break;
-							case 4: tologin = 1; break;
+							case 4: logout = 1; break;
 							case 5: return;
 						}
-						if(tologin) break;
+						if(logout) break;
 					}	
 				}
 				else exit(1); break;

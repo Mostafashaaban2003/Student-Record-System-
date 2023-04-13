@@ -1,18 +1,35 @@
 #include "student.h"
 
 int check_student_password(){
-	char *entered_id, *entered_password;
+	char *entered_id = NULL, *entered_password = NULL;
 	
-	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
+	printf ("\n======================================> ADMIN LOGIN SCREEN <====================================== \n");	
+	printf ("\n----------------(       If you Forgot The password At any Time Enter \"f\"       )----------------\n");
+	printf (  "----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
 
 	int index, tries = MAX_TRIES;
 	do 
 	{
 		printf("Please Your ID: ");
 		entered_id = takestring_v2();
+		
+		// if user entered f then go to forrgot password screen
+		if(!strcmp("f",entered_id) || !strcmp("F",entered_id)){
+			forgot_my_password();
+			return check_student_password();
+		}		
+		//if User entered - 1 return to Previous screen
 		if(!strcmp("-1",entered_id)) return -1;
+		
 		printf("Please Your Password: ");
 		entered_password = takestring_v2();
+		
+		// if user entered f then go to forrgot password screen
+		if(!strcmp("f",entered_password) || !strcmp("F",entered_password)) {
+			forgot_my_password();
+			return check_student_password();
+		}	
+		//if User entered - 1 return to Previous screen		
 		if(!strcmp("-1",entered_password)) return -1;
 		index = search_id(entered_id);
 		encrypt(entered_password);
@@ -27,7 +44,7 @@ int check_student_password(){
 
 void View_student_record(int index, int is_admin)
 {
-	
+	//if User entered - 1 return to Previous screen		
 	if(index == -1) return;
 	printf("\nName: %s\n", students[index].name);
     printf("ID: %s\n", students[index].id);
@@ -37,7 +54,7 @@ void View_student_record(int index, int is_admin)
 	if(is_admin){
 		//asking if admin wants to view more students
 		printf("\nDo You Want To View More Students?\n"
-			"Enter 'Y' For \"Yes\" ِAnd Anything Else For \"No\": ");
+			"Enter 'Y' For \"Yes\" And Anything Else For \"No\": ");
 		fflush(stdin);	   
 		char again;
 		scanf("%c",&again); fflush(stdin);
@@ -49,7 +66,7 @@ void View_student_record(int index, int is_admin)
 
 
 int Edit_student_Password() {
-    char *entered_password;
+    char *entered_password = NULL;
     int tries = MAX_TRIES;
 	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
     do {
@@ -87,14 +104,19 @@ void Edit_your_name() {
 	return;
 }
 
-// void forgot_my_password(){
-	// printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
-	// printf("Please Your ID: ");
-	// entered_id = takestring_v2();
-	// if(!strcmp("-1",entered_id)) return -1;
+void forgot_my_password(){
+	char* entered_id = NULL;
+	char* entered_name = NULL;
+ 	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
+	printf("Please Your ID: ");
+	entered_id = takestring_v2();
+	printf("Please Your Name: ");
+	entered_name = takestring_v2();
 	
-	
-// }	
+	int index = search_id(entered_id);
+	if(index == -1 || strcmp(entered_name,students[index].name)) return;
+	printf("Your Password is %s",decrypt(students[index].password));
+}	
 
 
 

@@ -3,7 +3,7 @@
 int check_student_password(){
 	char *entered_id = NULL, *entered_password = NULL;
 	
-	printf ("\n======================================> ADMIN LOGIN SCREEN <====================================== \n");	
+	printf ("\n=====================================> STUDENT LOGIN SCREEN <===================================== \n");	
 	printf ("\n----------------(       If you Forgot The password At any Time Enter \"f\"       )----------------\n");
 	printf (  "----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
 
@@ -107,14 +107,19 @@ void Edit_your_name() {
 void forgot_my_password(){
 	char* entered_id = NULL;
 	char* entered_name = NULL;
+	printf ("\n====================================> FORGET PASSWORD SCREEN <==================================== \n");		
  	printf ("\n----------------( If you want To return To Login Screen At any Time Enter \"-1\" )----------------\n");
 	printf("Please Your ID: ");
 	entered_id = takestring_v2();
+	if(!strcmp(entered_id,"-1")) return;
 	printf("Please Your Name: ");
 	entered_name = takestring_v2();
-	
+	if(!strcmp(entered_name,"-1")) return;
 	int index = search_id(entered_id);
-	if(index == -1 || strcmp(entered_name,students[index].name)) return;
+	if(index == -1 || strcmp(entered_name,students[index].name)) {
+		printf("\nInvalid Login!\n");
+		return;
+	}	
 	printf("Your Password is %s",decrypt(students[index].password));
 }	
 
